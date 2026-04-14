@@ -1,0 +1,39 @@
+body{
+
+}
+
+.container {
+    display: grid;
+    height: 100 vh;
+    grid-template-rows: repeat(2, 100px);
+    grid-template-columns: 1fr 2fr 75px minmax(75px, 10%);  
+    gap: 10px 5px;
+
+
+
+    & .box {
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        padding: 10px;
+        border-radius: 10px;
+    }
+    & header {
+        grid-column-start: 1;
+        grid-column-end: -1;
+    }
+    & footer {
+        grid-column-start: 1;
+        grid-column-end: -1;
+    }
+}
+
+			.container-areas {
+				& .box {}
+				& header {}
+				& nav {}
+				& article {}
+				& aside#a1 {}
+				& aside#a2 {}
+				& footer {}
+			}

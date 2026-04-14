@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://todomvc.com/examples/javascript-es6/dist/app.css">
+	<script type="module" src="cv2.js"></script>
+	<title>Lecture 02</title>
+</head>
+<body>
+	<section class="todoapp">
+		<header class="header">
+			<h1>todos</h1>
+			<input class="new-todo" placeholder="What needs to be done?" autofocus>
+		</header>
+		<section class="main">
+			<input class="toggle-all" type="checkbox">
+			<label for="toggle-all">Mark all as complete</label>
+			<ul class="todo-list"></ul>
+			<footer class="footer">
+				<span class="todo-count"></span>
+				<div class="filters">
+					<a id="filter-all" href="#/" class="selected">All</a>
+					<a id="filter-active" href="#/active">Active</a>
+					<a id="filter-completed" href="#/completed">Completed</a>
+				</div>
+				<button class="clear-completed">Clear completed</button>
+			</footer>
+		</section>
+	</section>
+
+	<footer class="info">
+		<p>Double-click to edit a todo</p>
+		<p>Created by <a href="https://twitter.com/oscargodson">Oscar Godson</a></p>
+		<p>Refactored by <a href="https://github.com/cburgmer">Christoph Burgmer</a></p>
+		<p>Part of <a href="https://todomvc.com">TodoMVC</a></p>
+	</footer>
+
+</body>
+</html>
