@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const songNotes = e.target.getAttribute('data-notes');
             
             if (songNotes) {
-                const targetUrl = new URL('index.html', window.location.origin);
+                const targetUrl = new URL(window.location.origin);
                 targetUrl.searchParams.set('song', songNotes);
                 window.location.href = targetUrl.toString();
             }
