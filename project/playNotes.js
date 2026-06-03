@@ -48,6 +48,7 @@ async function playNotes() {
         const durationValue = duration + "n";
         
         // in Tone are octave set up little differently, where A1 is actually A4 (I tried on my piano:D), thats why the 3 is added
+        const newOctave = noteObj.octave + 3;
         const noteNameUpdated = noteObj.letter + newOctave;
         
         currentSampler.triggerAttackRelease(noteNameUpdated, durationValue, currentTime);
