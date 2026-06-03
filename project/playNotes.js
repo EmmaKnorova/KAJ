@@ -33,23 +33,21 @@ async function playNotes() {
     
     const currentSampler = initSampler();
 
+    // console log for waiting
     if (!currentSampler.loaded) {
         console.warn("Piano is still loading, please wait...");
-        return;
-    }
-
-    if (!window.activeNotes || window.activeNotes.length === 0) {
-        console.warn("Žádné aktivní objekty not k přehrání.");
         return;
     }
 
     let currentTime = Tone.now();
 
     window.activeNotes.forEach(noteObj => {
+        // the length in Tone is the opposite and could be little confusing when writing input, 
+        // so I decided to divide it here and let user enter it in note duration
         const duration = 4 / noteObj.noteLength;
         const durationValue = duration + "n";
         
-        const newOctave = noteObj.octave + 3;
+        // in Tone are octave set up little differently, where A1 is actually A4 (I tried on my piano:D), thats why the 3 is added
         const noteNameUpdated = noteObj.letter + newOctave;
         
         currentSampler.triggerAttackRelease(noteNameUpdated, durationValue, currentTime);

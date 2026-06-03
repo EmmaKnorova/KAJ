@@ -5,8 +5,10 @@ const noteMap = {
     'G2': 50, 'A2': 40, 'B2': 30
 };
 const ledgerLines = ['C1', 'A2', 'B2'];
+//global variable available for playNotes.js
 window.activeNotes = [];
 
+// basic class for all music elements inclucing notes, ledger lines and stems
 class MusicalElement {
     constructor(x, y) {
         this.x = x;
@@ -26,6 +28,7 @@ class MusicalElement {
     }
 }
 
+// separate class for music notes
 class MusicalNote extends MusicalElement {
     constructor(noteString, x, y) {
         super(x, y);
@@ -84,6 +87,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     if (!input || !staffSvg) return;
 
+    // using URL API
     const currentUrl = new URL(window.location.href);
     const songFromUrl = currentUrl.searchParams.get('song');
 
@@ -120,6 +124,7 @@ window.addEventListener('popstate', (e) => {
     }
 });
 
+// setting up History API
 function updateHistoryURL(songString) {
     if (!songString) return;
 
@@ -150,6 +155,8 @@ function createNoteElement(staffSvg, currentX, yPos, noteStr) {
     const musicalNote = new MusicalNote(noteStr, currentX, yPos);
     window.activeNotes.push(musicalNote);
 
+    // creating the note stem for notes shorter than 4 beats
+    // if note is lower than B1, the stem faces up, otherwise down
     if (musicalNote.noteLength < 4) {
         const up = yPos < 110;
         let x1, x2, y1, y2;

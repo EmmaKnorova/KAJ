@@ -73,7 +73,7 @@ main {
     .staff {
         min-width: 500px; 
     }
-
+    /* using important otherwise the buttons are using different styling*/
     #play-button {
         margin: 10px 15px !important;
         width: calc(100% - 30px);
