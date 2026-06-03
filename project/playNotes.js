@@ -71,6 +71,7 @@ async function clearNotes() {
     window.activeNotes = [];
     
     const url = new URL(window.location.href);
+    console.log(url);
     url.searchParams.delete('song');
     history.pushState(null, '', url.pathname + url.search);
 }
