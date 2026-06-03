@@ -72,5 +72,5 @@ async function clearNotes() {
     
     const url = new URL(window.location.href);
     url.searchParams.delete('song');
-    history.pushState(null, '', url.toString());
+    history.pushState(null, '', url.pathname + url.search);
 }
