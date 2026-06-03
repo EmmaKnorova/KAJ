@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Lecture 11</title>
+	</head>
+	<body>
+		<h1>My SPA</h1>
+
+		<nav>
+			<ul>
+				<li><a href="?page=accesslog">Log</a></li>
+				<li><a href="?page=imageinfo">Image Info</a></li>
+				<li><a href="?page=intl">Intl</a></li>
+			</ul>
+		</nav>
+
+		<hr>
+
+		<main id="content"></main>
+
+		<script>
+			/*
+				SPA
+					https://developer.mozilla.org/en-US/docs/Glossary/SPA
+				URL
+					https://developer.mozilla.org/en-US/docs/Web/API/URL
+				URLSearchParams
+					https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+				History API
+					https://developer.mozilla.org/en-US/docs/Web/API/History_API
+
+				LocalStorage
+					https://developer.mozilla.org/en/docs/Web/API/Window/localStorage
+
+				File API
+					https://developer.mozilla.org/en-US/docs/Web/API/File
+				Filereader API
+					https://developer.mozilla.org/en-US/docs/Web/API/FileReader
+				Intl API
+					https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
+
+				1. Page class
+					- Implement page class that takes
+						- page `key` parameter
+						- page `title` parameter
+					- Implements pageShow and pageHide methods that shows/hides the pages
+				2. Router class
+					- That takes
+						- list of page instances
+						- default page (page key)
+					- Does initial routing based on window.location.href and decides which page to show
+						- Takes into account the `?page=something` query parameter
+						- Takes into account the default page
+						- Otherwise returns 404 page
+					- Does routing on `popstate` event
+					- Does routing on click on `a` elements
+					- On each routing it hides previous page, shows current page
+				3. LocalStorage page
+					- Take a look at LocalStorage API
+					- In local storage - save every user access of website, when he comes to the page save the date he came
+					- On "accesslog" page display all of the dates he accessed the page
+				4. File API page
+					- When user selects images, use File Reader API to read and display name, size and type of image
+				5. Intl API page
+					- Show outputs from common Intl API methods
+					- Intl.Collator – Sorting words
+					- Intl.DateTimeFormat – Today's date
+					- Intl.NumberFormat – Number as Czech currency
+					- Intl.PluralRules – Plural form of "file"
+					- Intl.RelativeTimeFormat – Relative time
+			*/
+
+			class Router {
+				constructor({pages, defaultPage}) {
+					this.pages = pages;
+					this.defaultPage = defaultPage;
+					this.currentPage = null
+
+					this.route(window.location.href);
+
+					window.addEventListener('popstate', e => {
+						this.route(window.location.href);
+					});
+
+                    window.addEventListener("click", e=>{
+                        const element = e.target;
+                        if(element.tagName === "A"){
+                            e.preventDefault();
+                            this.route(element.href);
+                            window.history.pushState(null, null, element.href);
+                        }
+                    })
+				}
+
+				route(href) {
+                    const url = new URL(href);
+                    const page = url.searchParams.get("page") ?? this.defaultPage;
+                    this.currentPage && this.currentPage.pageHide();
+                    const page404 = this.pages.find(p => p.key === "404");
+                    const pageInstanceMatched = this.pages.find(p => p.key === page);
+
+                    this.currentPage = pageInstanceMatched ?? page404;
+                    this.currentPage.pageShow();
+                }
+			}
+
+			class Page {
+				constructor({key, title}) {
+					this.pageElement = document.querySelector(`#content`)
+					this.title = title
+					this.key = key
+				}
+
+				render() {
+					return ``
+				}
+
+				pageShow() {
+                    this.pageElement.innerHTML = this.render();
+                    document.title = this.title;
+                }
+				pageHide() {
+                    this.pageElement.innerHTML = "";
+                }
+			}
+
+			class PageLog extends Page {
+				constructor(settings) {
+					super(settings)
+					this.log = [];
+				}
+
+				render() {
+					return `
+						<h2>Log</h2>
+
+						<h2>History entries</h2>
+						<ul id="history-entries"></ul>
+					`
+				}
+
+				pageShow() {
+                    super.pageShow();
+                    
+                    this.log = JSON.parse(localStorage.getItem("log")) || [];
+                    this.logVisit();
+                    this.showLog();
+
+                }
+				logVisit() {
+                    const date = new Date().toLocaleString("cs-CS");
+                    this.log.push(date);
+                    localStorage.setItem("log", JSON.stringify(this.log));
+                }
+				showLog() {
+                    const target = document.querySelector("#history-entries");
+                    target.innerHTML = "";
+                    for(const date of this.log){
+                        const li = document.createElement("li");
+                        li.textContent = date;
+                        target.append(li);
+                    }
+                }
+			}
+
+			class PageImage extends Page {
+				render() {
+					return `
+						<h2>Image Info</h2>
+
+						<input type="file" id="fileInput" multiple accept="image/*">
+						<ul id="imgInfo"></ul>
+						<div id="imgCnt"></div>
+					`
+				}
+
+				pageShow() {
+                    super.pageShow();
+
+                    const fileInput = document.querySelector("#fileInput");
+                    fileInput.addEventListener("change", e => this.onChange(e));
+
+                }
+				onChange(e) {
+                    const files = e.target.files;
+                    
+                    const imgContent = document.querySelector("#imgCnt");
+					const imgInfo = document.querySelector("#imgInfo");
+					imgInfo.innerHTML = '';
+					imgContent.innerHTML = '';
+
+					for (const f of files) {
+						if (!f.type.includes("image")) {
+							continue;
+						}
+
+						const fr = new FileReader();
+						fr.addEventListener("load", () => {
+							const i = new Image();
+							i.addEventListener("load", () => {
+								i.width = Math.min(i.naturalWidth, window.innerWidth - 20);
+							});
+							i.src = fr.result;
+							imgContent.append(i);
+
+							const li = document.createElement('li');
+							li.innerText = `type: ${f.type} | size: ${f.size} | name: ${f.name}`;
+							imgInfo.append(li);
+						});
+						fr.readAsDataURL(f);
+                    }
+                }
+			}
+
+			class PageIntl extends Page {
+				render() {
+					return `
+						<h2>Intl</h2>
+						<div id="intl"></div>
+					`
+				}
+
+				addOutput(title, result) {
+					const section = document.createElement('section');
+					section.innerHTML = `<h3>${title}</h3><pre>${result}</pre>`;
+					document.querySelector("#intl").append(section);
+				}
+
+				pageShow() {
+                    super.pageShow();
+                }
+			}
+
+			class PageNotFound extends Page {
+				render() {
+					return `
+						<h2>Not found</h2>
+						<p>Unknown page</p>
+					`
+				}
+			}
+
+			new Router({
+				pages: [
+					new PageLog({key: 'accesslog', title: 'Access log'}),
+					new PageImage({key: 'imageinfo', title: 'Image info'}),
+					new PageIntl({key: 'intl', title: 'Intl'}),
+					new PageNotFound({key: '404', title: 'Page not found'})
+				],
+				defaultPage: 'accesslog'
+			});
+		</script>
+	</body>
+</html>

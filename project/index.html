@@ -1,33 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>Tune Piano</title>
-        <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-        <link rel="stylesheet" href="styles.css">
-	</head>
-    <body>
-        <header>
-            <div class="logo"><img src="images/icon.png" alt="icon" style="width:42px;height:42px;"></div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tune Piano</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="backend.js"></script>
+    <script type="module" src="playNotes.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/icon.png" alt="icon" style="width:42px;height:42px;">
+        </div>
+        <nav>
             <ul class="header-links">
-                <li><a href="">Link 1</a></li>
-                <li><a href="">Link 2</a></li>
-                <li><a href="">Link 3</a></li>
-                <li><a href="">Link 4</a></li>
-                <li><a href="">Link 5</a></li>
-                <li><a href="">Link 6</a></li>
-            </ul>
-        </header>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="songs.html">Songs</a></li>
+                <li><a href="#">Link 3</a></li>
+            </ul>   
+        </nav>
+    </header>
 
-    <form>
-        <label for="notes">Enter notes:</label><br>
-        <input type="text" id="notes" name="notes" placeholder="e.g. A4 C8 B1 G2 F4" autofocus><br>
-    </form>
+    <main>
+        <section class="input-section">
+            <form id="note-form">
+                <label for="note-input">Enter the name of a note and a length:</label><br>
+                <input 
+                    type="text" 
+                    id="note-input" 
+                    name="notes" 
+                    placeholder="e.g. A2(2) C1(1) G1(4)" 
+                    autofocus 
+                    pattern="^([A-G][1-2]\([124]\)\s*)+$">
+                <button id="notebutton" type="submit">Draw Notes</button>
+            </form>
+        </section>
 
+        <section class="notes-and-instruction" aria-label="Editor and guidelines">
+            
+            <div class="staff-container">
+                <svg class="staff" viewBox="0 0 900 200">
+                    <text x="0" y="140" class="clef">𝄞</text>
+                    <g class="staff-lines">
+                        <line x1="0" y1="60"  x2="900" y2="60" />
+                        <line x1="0" y1="80"  x2="900" y2="80" />
+                        <line x1="0" y1="100" x2="900" y2="100" />
+                        <line x1="0" y1="120" x2="900" y2="120" />
+                        <line x1="0" y1="140" x2="900" y2="140" />
+                    </g>
+                </svg>
+            </div>
+            
+            <aside class="manual-box">
+                <h2 id="manual-heading">How to write notes 🎵:</h2>
+                <ul class="manual">
+                    <li><strong>Note and octave:</strong> Enter a letter (C-B) and an octave (1 or 2).<br><em>Example: C1, G2</em></li>
+                    <li><strong>Length:</strong> Add the duration in parentheses:<br>
+                        <code>(4)</code> = whole note<br>
+                        <code>(2)</code> = half note<br>
+                        <code>(1)</code> = quarter note
+                    </li>
+                    <li>Separate multiple notes with a space.<br><em>Example: C1(4) E1(4) G1(2)</em></li>
+                </ul>
+            </aside>
+        </section>
+
+        <section class="controls-section">
+            <form>
+                <button id="play-button" type="button">Play notes</button>
+                <button id="clear-button" type="button">Clear notes</button>
+            </form>
+        </section>
+
+    </main>
 
     <footer>
-      <p>©Copyright 2026 by nobody. All rights reversed.</p>
+        <p>©Copyright 2026 by nobody. All rights reserved.</p>
     </footer>
 
-    </body>
+</body>
 </html>

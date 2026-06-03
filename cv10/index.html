@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Shooter</title>
+	</head>
+	<style media="screen">
+		canvas {
+			background: #efefef;
+			border: 3px solid black;
+			box-shadow: 2px 2px 3px #a0a0a0;
+			cursor: crosshair;
+		}
+	</style>
+	<body>
+		<canvas width="800" height="800"></canvas>
+		<script type="text/javascript">
+			/*
+				1. study
+					- MDN Canvas https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
+						- fillRect
+						- drawImage
+						- clearRect
+					- CheatSheet https://simon.html5.org/dump/html5-canvas-cheat-sheet.html
+					- JS image handling
+						- https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/Image
+						- const image = new Image()
+						- image.src = 'image.src'
+						- image.addEventListener('load')
+					- JS sound handling
+						- https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement/Audio
+						- const sound = new Audio('audio-url.mp3')
+						- sound.play()
+						- sound.pause()
+						- sound.currentTime = 0
+
+				2. create shooter game
+					- draw background
+					- start drawing with request animation frame
+					- use ships array and render ships to canvas
+					- make them moving from bottom to top with various speed
+					- when they fly out of the screen, reposition them to the bottom
+					- add event listener to catch mouse click position
+					- calculate if ship was clicked
+					- destroy ship with click
+					- add sounds
+			*/
+
+			// global config
+			const speedMultiplier = 0.1;
+
+			// some constants
+			const canvas = document.querySelector('canvas');
+			const ctx = canvas.getContext('2d');
+			const WIDTH = canvas.offsetWidth;
+			const HEIGHT = canvas.offsetHeight;
+
+			// game state
+			let ships = [
+				{ x: 30, y:HEIGHT, speed: 1.0 },
+				{ x: 80, y:HEIGHT, speed: 0.5 },
+				{ x:150, y:HEIGHT, speed: 0.3 },
+				{ x:200, y:HEIGHT, speed: 0.6 },
+				{ x:300, y:HEIGHT, speed: 0.8 },
+				{ x:450, y:HEIGHT, speed: 2.0 },
+				{ x:600, y:HEIGHT, speed: 1.0 },
+				{ x:700, y:HEIGHT, speed: 0.3 },
+				{ x:800, y:HEIGHT, speed: 1.5 }
+			]
+            const backgroundImage = new Image();
+            backgroundImage.src = "space.jpg"
+            const shipImage = new Image();
+            shipImage.src = "spaceship_sprite.png";
+
+            const soundExplosion = new Audio("explosion.mp3");
+            const soundMiss = new Audio("miss.mp3");
+
+
+            function drawBackground(){
+                ctx.drawImage(backgroundImage, 0, 0)
+            }
+
+            backgroundImage.addEventListener("load", (e) => {
+                drawBackground()
+            });
+            
+		</script>
+	</body>
+</html>
