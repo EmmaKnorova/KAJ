@@ -241,14 +241,14 @@ footer p {
     align-items: center;
     padding: 12px 16px;
     margin-bottom: 12px;
-    background-color: #666;
+    background-color: #444;
     border-radius: 8px;
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 
     &:nth-of-type(even) {
         background-color: ghostwhite;
         .song-btn {
-            color: #666;
+            color: #444;
         }
     }
 
@@ -280,3 +280,13 @@ footer p {
     background-color: #f1f3f5;
 }
 
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}

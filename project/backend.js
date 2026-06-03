@@ -58,6 +58,7 @@ class MusicalNote extends MusicalElement {
     }
 }
 
+// for ledger lines and stems
 class MusicalLine extends MusicalElement {
     constructor(x1, y1, x2, y2, specificClass) {
         super(x1, y1); 
