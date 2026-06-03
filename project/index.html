@@ -14,18 +14,17 @@
         <div class="logo">
             <img src="images/icon.png" alt="icon" style="width:42px;height:42px;">
         </div>
+        <h1 class="visually-hidden">Tune Piano - Sheet Music Editor</h1>
         <nav>
             <ul class="header-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="songs.html">Songs</a></li>
-                <li><a href="#">Link 3</a></li>
             </ul>   
         </nav>
     </header>
 
     <main>
-        <section class="input-section">
-            <!-- form with validator, placeholder and autofocus-->
+        <div class="input-section">
             <form id="note-form">
                 <label for="note-input">Enter the name of a note and a length:</label><br>
                 <input 
@@ -37,9 +36,10 @@
                     pattern="^([A-G][1-2]\([124]\)\s*)+$">
                 <button id="notebutton" type="submit">Draw Notes</button>
             </form>
-        </section>
+        </div>
 
         <section class="notes-and-instruction" aria-label="Editor and guidelines">
+            <h2 class="visually-hidden">Visualizer</h2>
             <div class="staff-container">
                 <svg class="staff" viewBox="0 0 900 200">
                     <text x="0" y="140" class="clef">𝄞</text>
@@ -54,25 +54,25 @@
             </div>
             
             <aside class="manual-box">
-                <h2 id="manual-heading">How to write notes 🎵:</h2>
+                <h3 id="manual-heading">How to write notes 🎵:</h3>
                 <ul class="manual">
                     <li><strong>Note and octave:</strong> Enter a letter (C-B) and an octave (1 or 2).<br><em>Example: C1, G2</em></li>
                     <li><strong>Length:</strong> Add the duration in parentheses:<br>
-                        <code>(4)</code> = whole note<br>
+                        <code>(1)</code> = whole note<br>
                         <code>(2)</code> = half note<br>
-                        <code>(1)</code> = quarter note
+                        <code>(4)</code> = quarter note
                     </li>
                     <li>Separate multiple notes with a space.<br><em>Example: C1(4) E1(4) G1(2)</em></li>
                 </ul>
             </aside>
         </section>
 
-        <section class="controls-section">
+        <div class="controls-section">
             <form>
                 <button id="play-button" type="button">Play notes</button>
                 <button id="clear-button" type="button">Clear notes</button>
             </form>
-        </section>
+        </div>
 
     </main>
 
