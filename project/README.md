@@ -6,11 +6,11 @@ Součástí je i samostatná knihovna, kde si člověk může vybrat z několika
 
 ## Cíl projektu
 
-Hlavním cílem bylo vytvořit jednoduchý, přehledný a interaktivní nástroj pro lidi, kteří si chtějí vizualizovat a poslechnout melodii bez nutnosti ovládat složité notační programy. 
+Hlavním cílem bylo vytvořit jednoduchý, přehledný a interaktivní nástroj pro lidi, kteří si chtějí vizualizovat a poslechnout melodii bez nutnosti ovládat složité hudební programy.  
 
 ## Popis funkčnosti
 
-Aplikace funguje jako interaktivní editor rozdělený na dvě hlavní části:
+Aplikace je rozdělena na dvě hlavní části:
 
 1. Hlavní editor (index.html): Obsahuje textové pole, kam se píšou noty. Po odeslání formuláře skript text přechroustá a okamžitě vykreslí noty do osnovy. Pod osnovou jsou tlačítka pro přehrání celé sekvence nebo kompletní vyčištění plátna. Rozepsaná písnička se navíc průběžně ukládá do URL adresy, takže ji stačí zkopírovat a poslat dál pro sdílení.
 2. Knihovna skladeb (songs.html): Nabízí seznam předpřipravených známých písniček (např. Prší prší nebo Happy Birthday). U každé skladby je integrovaný klasický audio přehrávač pro rychlý poslech a tlačítko, které celou melodii vezme, hodí ji zpět do hlavního editoru a automaticky ji tam vykreslí k další úpravě.
